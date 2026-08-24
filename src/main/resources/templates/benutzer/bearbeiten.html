@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" th:href="@{/benutzerstyle.css}">
+  </head>
+  <body>
+    <article th:insert="~{fragments/kopffuss :: kopf}">
+      Kopfblock
+    </article>
+    <div class="titel">
+      <h1 id="pathname" name="pathname" th:text="#{benutzer.bearbeiten.titel(${pathname})}">Name</h1>
+    </div> 
+    <div class="formular">
+      <div class="eingabefelder">
+        <form th:action="@{/admin/benutzer/{n}(n=${pathname})}" th:object="${formular}" method="POST">
+          <div class="eingabe">
+            <label th:text="#{benutzer.name}">Name:</label>
+            <div class="eingabeUndError">
+              <input type="text" id="name" name="name" th:field="*{name}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{benutzer.email}">E-Mail:</label>
+            <div class="eingabeUndError">
+              <input type="text" id="email" name="email" th:field="*{email}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{benutzer.adresse}">Adresse:</label>
+            <div class="eingabeUndError">
+              <input type="text" id="adresse" name="adresse" th:field="*{adresse}">
+              <p th:if="${#fields.hasErrors('adresse')}" th:errors="*{adresse}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{benutzer.rolle}">Rolle:</label>
+            <div class="eingabeUndError">
+              <select name="rolle" id="rolle" th:field="*{rolle}">
+                <option value="DEFAULT"></option>
+                <option th:text="#{benutzer.rolle.admin}" value="ADMINISTRATOR">Administrator</option>
+                <option th:text="#{benutzer.rolle.kunde}" value="ANBIETER">Anbieter</option>
+                <option th:text="#{benutzer.rolle.gesperrt}" value="TESTER">Tester</option>
+              </select><br><br>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{benutzer.losung}">Passwort:</label>
+            <div class="eingabeUndError">
+              <input type="password" id="passwort" name="passwort" th:field="*{passwort}">
+              <p th:if="${#fields.hasErrors('passwort')}" th:errors="*{passwort}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{benutzer.losungwh}">Passwort (Wiederholung):</label>
+            <div class="eingabeUndError">
+              <input type="password" id="passwortWiederholung" name="passwortWiederholung" th:field="*{passwortWiederholung}">
+              <p th:if="${#fields.hasErrors('passwortWiederholung')}" th:errors="*{passwortWiederholung}" th:text="#{benutzer.fehler.passwortwiederholung}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="checkboxeingabe">
+            <input type="checkbox" id="aktiviert" name="aktiviert" th:field="*{aktiviert}">
+            <label th:text="#{benutzer.aktiviert}">aktiviert</label><br><br>
+          </div>
+          <div class="buttoneingabe">
+            <button type="button" th:text="#{benutzer.liste.zeile.abbrechen}">Abbruch</button>
+            <button type="submit" th:text="#{benutzer.liste.zeile.ok}">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div>
+      <p th:text="#{benutzer.bearbeiten.bestellteartikel}">Bestellt</p>
+      <ul>
+        <li th:each="artikel : ${artikelList}" th:text="${artikel.title}" >Erster Punkt</li>
+      </ul>
+    </div>
+    <article th:insert="~{fragments/kopffuss :: fuss}">
+      Fusszeile
+    </article>
+  </body>
+
+</html>

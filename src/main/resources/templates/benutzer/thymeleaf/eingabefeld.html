@@ -1,0 +1,17 @@
+<td th:fragment="ausgeben(loginName,feldname,wert)" th:hx-get="@{/admin/benutzer/{loginName}/hx/feld/{feldname}(loginName=${loginName},feldname=${feldname})}" hx-target="this" hx-swap="outerHTML">
+    <span name="wert" th:text=${wert}></span>
+</td>
+
+<td th:fragment="bearbeiten(loginName,feldname,wert)">
+    <form class="listeingabe" th:hx-put="@{/admin/benutzer/{loginName}/hx/feld/{feldname}(loginName=${loginName},feldname=${feldname})}" hx-target="closest td" hx-swap="outerHTML">
+        <div class="eingabeUndError">
+            <div class="listeingabe">
+                <input name="wert" th:value="${wert}" />
+                <button type="submit" th:text="#{benutzer.liste.zeile.ok}">ok</button>
+            </div>
+            <div th:if="${fehler != null}">
+                <p th:text="${fehler}" class="fehler"></p>
+            </div>
+        </div>
+    </form>
+</td>
