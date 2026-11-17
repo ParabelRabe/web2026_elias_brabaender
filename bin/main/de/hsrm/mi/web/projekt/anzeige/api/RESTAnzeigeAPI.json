@@ -1,0 +1,11 @@
+{
+    "id": 1,
+    "titel": "Orangenhammer",
+    "beschreibung":"Antiker Orangenhammer zur platzsparenden Umformung von Obst",
+    "preis": 10,
+    "anzahl": 20,
+    "ablaufdatum":"2026-08-17",
+    "verfuegbar": 17,
+    "anbieterName":"Joendhard Biffel",
+    "anbieterAdresse":"In den Blamuesen 234, 40489 Duesseldorf"
+}

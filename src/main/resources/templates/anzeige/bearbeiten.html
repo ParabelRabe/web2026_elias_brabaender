@@ -15,7 +15,7 @@
           <div class="eingabe">
             <label th:text="#{anzeige.bearbeitten.anbieter}">aaaanbieter:</label>
             <div class="eingabeUndError">
-              <label th:text="${anbieter?.username} ?: 'unbekannt'"></label>
+              <label th:text="*{anbieter != null} ? *{anbieter.name} : 'unbekannt'"></label>
             </div>
           </div>
           <div class="eingabe">
@@ -54,7 +54,8 @@
             </div>
           </div>
           <div class="buttoneingabe">
-            <button type="button" th:text="#{anzeige.bearbeiten.abbrechen}">Abbruch</button>
+            <!--<button type="button" th:text="#{anzeige.bearbeiten.abbrechen}">Abbruch</button>-->
+            <button type="submit" th:formaction="@{/admin/anzeige}" formmethod="get" th:text="#{anzeige.bearbeiten.abbrechen}">Abbruch</button>
             <button type="submit" th:text="#{anzeige.bearbeiten.ok}">OK</button>
           </div>
         </form>

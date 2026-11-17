@@ -63,7 +63,7 @@
             <label th:text="#{benutzer.aktiviert}">aktiviert</label><br><br>
           </div>
           <div class="buttoneingabe">
-            <button type="button" th:text="#{benutzer.liste.zeile.abbrechen}">Abbruch</button>
+            <button type="submit" th:formaction="@{/admin/benutzer}" formmethod="get" th:text="#{benutzer.liste.zeile.abbrechen}">Abbruch</button>
             <button type="submit" th:text="#{benutzer.liste.zeile.ok}">OK</button>
           </div>
         </form>

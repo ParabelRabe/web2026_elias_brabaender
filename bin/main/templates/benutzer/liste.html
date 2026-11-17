@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" th:href="@{/benutzerstyle.css}">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.js" integrity="sha384-Q+Dky3iHVJOr6wUjQ4ulh6uQ76an/t+ak1+PjMVaxRjbZamFLAG+u9InkfjbsEQf" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <article th:insert="~{fragments/kopffuss :: kopf}">
+      Kopfblock
+    </article>
+    <div class="titel">
+      <h1 th:text="#{benutzer.liste.titel}">BenList</h1>
+    </div>
+    <div class="tabelle">
+        <table>
+            <tr>
+                <th>
+                    <p th:text="#{benutzer.liste.spalte.loginname}"></p>
+                </th>
+                <th>
+                    <p th:text="#{benutzer.liste.spalte.name}"></p>
+                </th>
+                <th>
+                    <p th:text="#{benutzer.liste.spalte.email}"></p>
+                </th>
+                <th>
+                    <p th:text="#{benutzer.liste.spalte.rolle}"></p>
+                </th>
+                <th>
+                </th>
+            </tr>
+            <tr th:each="e : ${benutzerList}">
+                <td th:text="${e.loginName}"></td>
+                <td th:replace="~{benutzer/thymeleaf/eingabefeld :: ausgeben(loginName=${e.loginName},feldname=name,wert=${e.name})}">
+                </td>
+                <td th:replace="~{benutzer/thymeleaf/eingabefeld :: ausgeben(loginName=${e.loginName},feldname=email,wert=${e.email})}">
+                </td>
+                <td th:text="${e.rolle}"></td>
+                <td class="listbuttons">
+                    <form th:action="@{/admin/benutzer/{n}(n=${e.loginName})}" method="get" class="buttonform">
+                        <button type="submit"th:text="#{benutzer.liste.spalte.bearbeiten}">BBB</button>
+                    </form>
+                    <form th:action="@{/admin/benutzer/{n}/delete(n=${e.loginName})}" method="get" class="buttonform">
+                        <button type="submit"th:text="#{benutzer.liste.spalte.loeschen}">LLL</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <article th:insert="~{fragments/kopffuss :: fuss}">
+      Fusszeile
+    </article>
+  </body>
+
+</html>

@@ -50,7 +50,9 @@ public class AnzeigeController {
         }
         else{
             Anzeige anzeige = zeige.get();
+            logger.warn("Dies ist anbieter im get: " + anzeige.getAnbieter());
             f = this.anzeigeMapper.anzeigeToAnzeigeFormular(anzeige);
+            logger.warn("Dies ist anbieter im formular: " + f.getAnbieter());
             session.setAttribute(id, anzeige.getVersion());
         }
         m.addAttribute("pathname", id);
@@ -71,8 +73,15 @@ public class AnzeigeController {
         }
 
         try {
+            logger.warn("Dies ist anbieter im f: " + f.getAnbieter());
             Anzeige anzeige = this.anzeigeMapper.anzeigeFormularToAnzeige(f);
+            logger.warn("Dies ist anbieter: " + anzeige.getAnbieter());
             long longId = Long.parseLong(id);
+            Optional<Anzeige> zeige = this.anzeigeservice.findAnzeigeById(longId);
+            Anzeige anzeigealt = zeige.get();
+            anzeige.setAnbieter(anzeigealt.getAnbieter());
+            logger.warn("Dies ist anbieter nun nach fix: " + anzeige.getAnbieter());
+
             if (longId > 0) {
                 anzeige.setId(longId);
             }

@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" th:href="@{/benutzerstyle.css}">
+  </head>
+  <body>
+    <article th:insert="~{fragments/kopffuss :: kopf}">
+      Kopfblock
+    </article>
+    <div class="titel">
+      <h1 th:text="#{anzeige.liste.titel}">BenList</h1>
+    </div>
+    <div class="tabelle">
+        <table>
+            <tr>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.anbietername}"></p>
+                </th>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.titel}"></p>
+                </th>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.preis}"></p>
+                </th>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.anzahl}"></p>
+                </th>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.bestellt}"></p>
+                </th>
+                <th>
+                    <p th:text="#{anzeige.liste.spalte.ablaufdatum}"></p>
+                </th>
+                <th>
+                </th>
+            </tr>
+            <tr th:each="anzeige : ${anzeigeList}">
+                <td th:text="${anzeige.anbieter?.name} ?: 'unbekannt'">unbekannt</td>
+                <td th:text="${anzeige.title}">Name</td>
+                <td th:text="${anzeige.preis}">E-Mail</td>
+                <td th:text="${anzeige.anzahl}">Rolle</td>
+                <td th:text="${anzeige.besteller?.size()}">Rolle</td>
+                <td th:text="${anzeige.ablaufdatum}">Rolle</td>
+                <td class="listbuttons">
+                    <form th:action="@{/admin/anzeige/{n}(n=${anzeige.id})}" method="get" class="buttonform">
+                        <button type="submit"th:text="#{anzeige.liste.spalte.bearbeiten}">BBB</button>
+                    </form>
+                    <form th:action="@{/admin/anzeige/{n}/delete(n=${anzeige.id})}" method="get" class="buttonform">
+                        <button type="submit"th:text="#{anzeige.liste.spalte.loeschen}">LLL</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="buttoneingabe2">
+        <form th:action="@{/admin/anzeige/0}" method="get" class="buttonform">
+            <button type="submit"th:text="#{anzeige.bearbeiten.neu.titel}">LLL</button>
+        </form>
+    </div>
+    <article th:insert="~{fragments/kopffuss :: fuss}">
+      Fusszeile
+    </article>
+  </body>
+
+</html>

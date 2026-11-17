@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head></head>
+    <body>
+        <header th:fragment="kopf">
+            <div class="kopf">
+                <h1>Kleinstanzeigen</h1>
+                <a sec:authorize="hasRole('ADMINISTRATOR')" th:href="@{/admin/benutzer}" th:text="#{kopf.benutzer}" class="benutzerListSeite">Nutzer</a>
+                <a th:href="@{/admin/anzeige}" th:text="#{kopf.anzeigen}" class="benutzerListSeite">Zeige</a>
+                <div class="leere"></div>
+                <div class="sprachumstellung">
+                    <a th:href="@{?sprache=de}" class="sprache">DE</a>
+                    <a th:href="@{?sprache=en}" class="sprache">EN</a>
+                    <a th:href="@{?sprache=nl}" class="sprache">NL</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" th:text="#{kopf.abmelden}">abmelden</a>
+                </div>
+            </div>
+            <div class="fehlermessageContainer" th:if="${info}">
+                <div class="fehlermessage">
+                    <p th:text="*{info}" class="fehler"></p>
+                </div>
+            </div>
+        </header>
+        <footer th:fragment="fuss">
+            <div class="fussangaben">
+                <label id="impressum">Impressum</label>
+                <p sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name" class="username-display">Max Mustermann</span>
+                    <span sec:authentication="principal.authorities">[eirgendeineRolle]</span>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

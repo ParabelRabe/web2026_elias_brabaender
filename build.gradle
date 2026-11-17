@@ -41,7 +41,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
+/*
 task uebersetzungenToProperties(type: Exec) {
 	description = "Mit Python-Skript Uebersetzungen generieren"
 	commandLine = "python3 uebersetzungen-to-properties.py".split()
@@ -50,3 +50,4 @@ task uebersetzungenToProperties(type: Exec) {
 tasks.named("processResources") {
 	dependsOn("uebersetzungenToProperties")
 }
+*/

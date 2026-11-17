@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" th:href="@{/benutzerstyle.css}">
+  </head>
+  <body>
+    <article th:insert="~{fragments/kopffuss :: kopf}">
+      Kopfblock
+    </article>
+    <div class="titel">
+      <h1 id="pathname" name="pathname" th:text="#{anzeige.bearbeiten.titel(${pathname})}">Name</h1>
+    </div> 
+    <div class="formular">
+      <div class="eingabefelder">
+        <form th:action="@{/admin/anzeige/{n}(n=${pathname})}" th:object="${formular}" method="POST">
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeitten.anbieter}">aaaanbieter:</label>
+            <div class="eingabeUndError">
+              <label th:text="*{anbieter != null} ? *{anbieter.name} : 'unbekannt'"></label>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeiten.titell}">E-Mail:</label>
+            <div class="eingabeUndError">
+              <input type="text" id="title" name="title" th:field="*{title}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeiten.beschreibung}">Adresse:</label>
+            <div class="eingabeUndError">
+              <input type="text" id="beschreibung" name="beschreibung" th:field="*{beschreibung}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('beschreibung')}" th:errors="*{beschreibung}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeiten.preis}">E-Mail:</label>
+            <div class="eingabeUndError">
+              <input type="number" id="preis" name="preis" th:field="*{preis}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('preis')}" th:errors="*{preis}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeiten.anzahl}">E-Mail:</label>
+            <div class="eingabeUndError">
+              <input type="number" id="anzahl" name="anzahl" th:field="*{anzahl}" th:errorclass="input-fehler">
+              <p th:if="${#fields.hasErrors('anzahl')}" th:errors="*{anzahl}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="eingabe">
+            <label th:text="#{anzeige.bearbeiten.ablaufdatum}">Passwort (Wiederholung):</label>
+            <div class="eingabeUndError">
+              <input type="date" id="ablaufdatum" name="ablaufdatum" th:field="*{ablaufdatum}">
+              <p th:if="${#fields.hasErrors('ablaufdatum')}" th:errors="*{ablaufdatum}" class="fehler"></p>
+            </div>
+          </div>
+          <div class="buttoneingabe">
+            <!--<button type="button" th:text="#{anzeige.bearbeiten.abbrechen}">Abbruch</button>-->
+            <button type="submit" th:formaction="@{/admin/anzeige}" formmethod="get" th:text="#{anzeige.bearbeiten.abbrechen}">Abbruch</button>
+            <button type="submit" th:text="#{anzeige.bearbeiten.ok}">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <article th:insert="~{fragments/kopffuss :: fuss}">
+      Fusszeile
+    </article>
+  </body>
+
+</html>
