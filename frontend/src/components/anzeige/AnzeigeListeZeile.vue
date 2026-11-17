@@ -25,7 +25,7 @@ import { useInfo } from '@/composables/useInfo.ts'
         const encodeuri = encodeURI(anzeige.anbieterAdresse)
         window.open(uri + encodeuri, "_blank")
     }
-    async function stornieren(id: number){
+    async function stornieren(anzeige: IAnzeigeDTD){
         const loginName = loginStore.loginState.username;
 
         if (!loginName) {
@@ -34,7 +34,7 @@ import { useInfo } from '@/composables/useInfo.ts'
         }
 
         try {
-            const response = await fetch(`/api/anzeige/${id}/stornieren/${loginName}`, {
+            const response = await fetch(`/api/anzeige/${anzeige.id}/stornieren/${loginName}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ import { useInfo } from '@/composables/useInfo.ts'
             if (!response.ok) {
                 const errorText = await response.text();
                 //setzeInfo('Stornierung fehlgeschlagen: ${errorText || response.statusText}');
-                setzeInfo('Stornierung fehlgeschlagen');
+                setzeInfo('Sie haben nichts zum Stornieren');
             }
             else{
                 loescheInfo();
@@ -55,7 +55,7 @@ import { useInfo } from '@/composables/useInfo.ts'
         }
     }
 
-    async function bestellen(id: number){
+    async function bestellen(anzeige: IAnzeigeDTD){
         const loginName = loginStore.loginState.username;
 
         if (!loginName) {
@@ -64,7 +64,7 @@ import { useInfo } from '@/composables/useInfo.ts'
         }
 
         try {
-            const response = await fetch(`/api/anzeige/${id}/bestellen`, {
+            const response = await fetch(`/api/anzeige/${anzeige.id}/bestellen`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ import { useInfo } from '@/composables/useInfo.ts'
             if (!response.ok) {
                 const errorText = await response.text();
                 //setzeInfo('Bestellung fehlgeschlagen: ${errorText || response.statusText}');
-                setzeInfo('Bestellung fehlgeschlagen');
+                setzeInfo("Sie haben bereits bestellt oder versuchen Ihr eigenes Produkt zu bestellen oder sind kein registrierter Nutzer");
             }
             else{
                 loescheInfo();
@@ -119,8 +119,8 @@ import { useInfo } from '@/composables/useInfo.ts'
         <td></td>
         <td colspan="4">
             <div>
-                <button v-if="anzeige.verfuegbar > 0" @click="bestellen(anzeige.id)">bestellen</button>
-                <button v-if="anzeige.verfuegbar < anzeige.anzahl" @click="stornieren(anzeige.id)">stornieren</button>
+                <button v-if="anzeige.verfuegbar > 0" @click="bestellen(anzeige)">bestellen</button>
+                <button v-if="anzeige.verfuegbar < anzeige.anzahl" @click="stornieren(anzeige)">stornieren</button>
             </div>
         </td>
     </tr>

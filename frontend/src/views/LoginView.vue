@@ -30,16 +30,31 @@ const userdata = reactive<{username: string, passwort: string}>({username: "", p
 const useinfo = useInfo()
 const {info, loescheInfo, setzeInfo} = useinfo
 logout()
-function clickLogin(){
-    if(!login(userdata.username, userdata.passwort)){
-        setzeInfo("Jammer - der Login-Versuch war zwar nicht erfolgreich, aber erfolglos")
-        userdata.passwort = ""
-    }
-    else{
-        loescheInfo()
-        userdata.username = ""
-        userdata.passwort = ""
-        router.push("/anzeige")
+async function clickLogin(){
+    try{
+        const response = await fetch(`/api/anzeige/getUser/${userdata.username}`, {
+            method: 'GET',
+        });
+        const userExists: boolean = await response.json();
+        if (userExists) {
+            if(!login(userdata.username, userdata.passwort)){
+            setzeInfo("Jammer - der Login-Versuch war zwar nicht erfolgreich, aber erfolglos")
+            userdata.passwort = ""
+            }
+            else{
+                loescheInfo()
+                userdata.username = ""
+                userdata.passwort = ""
+                router.push("/anzeige")
+            }
+        } 
+        else {
+            setzeInfo("Jammer - der Nutzer ist nicht vergeben")
+            userdata.passwort = ""
+        }
+    } catch (error) {
+        console.error(error);
+        setzeInfo("Stornierung fehlgeschlagen.")
     }
 }
 </script>

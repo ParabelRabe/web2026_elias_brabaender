@@ -96,5 +96,9 @@ public class AnzeigeRestController {
         }
     }
     
+    @GetMapping("/api/anzeige/getUser/{id}")
+    public boolean getUserById(@PathVariable("id") String i) {
+        return benutzerService.findBenutzerById(i).isPresent();
+    }
     
 }
